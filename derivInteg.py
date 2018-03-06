@@ -118,63 +118,78 @@ def values():
         #repeat if neither was entered
         else:
             step = input("That is not a proper command. Would you like to find the `integral` or the `derivative` of the equation? -- > ")
+    #call the switch function for the first time
     switch()
     print("")
     #ask the user if they want to repeat the application for another equation, switch between integration and derivation or exit the application
     repeat = input("Enter `restart` to enter a new equation or `switch` to do something different with the current equation; any other input will exit the application --> ")
-    if repeat == "restart":  
+    if repeat == "restart":
+    	#start from the beginning to reset equation  
         values()
     elif repeat == "switch":
+    	#restart switch function to integrate or derive
         switch()
     else:
+    	#exit message and application close
         print("Thank you for using CalCalc! Check back soon for updates in our functionality...")
         print("")
-    
+
 def integrate(array, lim1="na", lim2="na"):
+	#initialize integral coefficient list and variable integral string
     integral = []
     intStr = ""
+    #initialize the lower integral solution (solution where x = lim1) and higher integral solution (where x = lim2)
     loInt = 0
     hiInt = 0
+    #length of the initial equation coefficient list (ƒ(x))
     rem = len(array)
     for typeProxy in range(rem):
+    	#set the value to manipulate based on integral formulation
         e = array[typeProxy]
+        #if the current reference is the last element in the list
         if typeProxy == (rem-1):
+        	#add the integral coefficient to the array and then update the string (logic: constant of ƒ(x) to constant*x)
             integral.append((e/(rem-typeProxy)))
+            #if string is still blank (error mentioned in values())
             if intStr == "":
                 if e != 0:
                     intStr += str(e) + "x"
+       		#positive or negative
             else:
                 if e > 0:
                     intStr += " + " + str(e) + "x"
                 elif e < 0:
                     intStr += " " + str(e) + "x"
-          
+        #if the current reference is the first element in the list
         elif typeProxy == 0:
-            integral.append((e/(rem-typeProxy)))
+        	#append the coefficient
+            integral.append((e/(rem)))
             if (e % rem) == 0:    
                 if e != 0:
-                    intStr += str(rem*e) + "x^" + str(rem)
+                    intStr += str(e/rem) + "x^" + str(rem)
             else:
                 if e != 0:
                     intStr += "(" + str(e) + "/" + str(rem) + ")x^" + str(rem)
+        #all other elements in the equation to be included in the integral
         else:
             integral.append((e/(rem-typeProxy)))
+        	#if the integral string doesn't exist yet (see error in values())
             if intStr == "":
                 if e != 0:
                     if (e % (rem-typeProxy)) == 0:
-                        intStr += str((rem-typeProxy)*e) + "x^" + str(rem-typeProxy)
+                        intStr += str(e/(rem-typeProxy)) + "x^" + str(rem-typeProxy)
                     else:
-                        intStr += "(" + str((rem-typeProxy)*e) + "/" + str(rem-typeProxy) + ")x^" + str(rem-typeProxy)
+                        intStr += "(" + str(e) + "/" + str(rem-typeProxy) + ")x^" + str(rem-typeProxy)
             else:
                 if e != 0:
                     if (e % (rem-typeProxy)) == 0:
                         if e > 0:
-                            intStr += " + " + str((rem-typeProxy)*e) + "x^" + str(rem-typeProxy)
+                            intStr += " + " + str(e/(rem-typeProxy)) + "x^" + str(rem-typeProxy)
                         elif e < 0:
-                            intStr += " " + str((rem-typeProxy)*e) + "x^" + str(rem-typeProxy)
+                            intStr += " " + str(e/(rem-typeProxy)) + "x^" + str(rem-typeProxy)
                     else:
                         if e != 0:
-                            intStr += " + " + "(" + str((rem-typeProxy)*e) + "/" + str(rem-typeProxy) + ")x^" + str(rem-typeProxy)
+                            intStr += " + " + "(" + str(e) + "/" + str(rem-typeProxy) + ")x^" + str(rem-typeProxy)
     if lim1 != "na":
         rem = len(integral)
         for i in range(rem):
