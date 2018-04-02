@@ -12,7 +12,7 @@ def calcalc():
 def values():
     print("")
     #this variable determines how many elements exist in ƒ(x)
-    n = int(input("What is the exponent on the leading element of ƒ(x)? -->"))
+    n = int(input("What is the exponent on the leading element of ƒ(x)? --> "))
     #save n for later reference; leadCoEx will be changed / n will not
     leadCoEx = n
     #equat is the array of n coefficients and a single constant for ƒ(x)
@@ -84,8 +84,22 @@ def values():
     print("ƒ(x) = " + equatStr)
     #ask the user what they want to do with the equation
     def switch():
+        #ask the user if they want to repeat the application for another equation, switch between integration and derivation or exit the application
+        def repeat():
+            print("")
+            repeat = input("Enter `restart` to enter a new equation or `switch` to do something different with the current equation; any other input will exit the application --> ")
+            if repeat == "restart":
+                #start from the beginning to reset equation  
+                values()
+            elif repeat == "switch":
+                #restart switch function to integrate or derive
+                switch()
+            else:
+                #exit message and application close
+                print("Thank you for using CalCalc! Check back soon for updates in our functionality ...")
+                sprint("")
         print("")
-        step = input("Would you like to find the `integral` or the `derivative` of the equation? -- > ")
+        step = input("Would you like to find the `integral` or the `derivative` of the equation? --> ")
         if step == "integral":
             print("")
             #ask the user whether they want to integrate over a set of continuous values for x or in variable terms
@@ -97,10 +111,12 @@ def values():
                 val2 = int(input("Upper limit across the X-axis --> "))
                 #integrate with these limits included in the function arguments
                 integrate(equat, val1, val2)
+                repeat()
             #variable
             else:
                 #integrate without limits included in the function arguments
                 integrate(equat)
+                repeat()
         elif step == "derivative":
             print("")
             #ask the user whether they are looking for a numerical derivative or a variable derivative
@@ -111,28 +127,18 @@ def values():
                 varVal = int(input("Solve the derivative where x is equal to --> "))
                 #pass the x value into the derivative function arguments
                 derivative(equat, varVal)
+                repeat()
             #variable
             else:
                 #no x value in the derivative function arguments
                 derivative(equat)
+                repeat()
         #repeat if neither was entered
         else:
-            step = input("That is not a proper command. Would you like to find the `integral` or the `derivative` of the equation? -- > ")
+            step = input("That is not a proper command. Would you like to find the `integral` or the `derivative` of the equation? --> ")
     #call the switch function for the first time
     switch()
     print("")
-    #ask the user if they want to repeat the application for another equation, switch between integration and derivation or exit the application
-    repeat = input("Enter `restart` to enter a new equation or `switch` to do something different with the current equation; any other input will exit the application --> ")
-    if repeat == "restart":
-    	#start from the beginning to reset equation  
-        values()
-    elif repeat == "switch":
-    	#restart switch function to integrate or derive
-        switch()
-    else:
-    	#exit message and application close
-        print("Thank you for using CalCalc! Check back soon for updates in our functionality...")
-        print("")
 
 def integrate(array, lim1="na", lim2="na"):
 	#initialize integral coefficient list and variable integral string
@@ -180,16 +186,20 @@ def integrate(array, lim1="na", lim2="na"):
                         intStr += str(e/(rem-typeProxy)) + "x^" + str(rem-typeProxy)
                     else:
                         intStr += "(" + str(e) + "/" + str(rem-typeProxy) + ")x^" + str(rem-typeProxy)
+            #integral formula logic
             else:
                 if e != 0:
+                	#integer or float
                     if (e % (rem-typeProxy)) == 0:
                         if e > 0:
                             intStr += " + " + str(e/(rem-typeProxy)) + "x^" + str(rem-typeProxy)
                         elif e < 0:
                             intStr += " " + str(e/(rem-typeProxy)) + "x^" + str(rem-typeProxy)
+                    #fractional
                     else:
                         if e != 0:
                             intStr += " + " + "(" + str(e) + "/" + str(rem-typeProxy) + ")x^" + str(rem-typeProxy)
+    #numerical integral calculation
     if lim1 != "na":
         rem = len(integral)
         for i in range(rem):
@@ -202,15 +212,18 @@ def integrate(array, lim1="na", lim2="na"):
         print("∫ƒ(x)dx = " + intStr + " + c")
         print("")
         print("The integral of this equation from x = " + str(lim1) + " to x = " + str(lim2) + " is " + str(ifx) + " units^2.")
+    #indefinite integral string presentation
     else:
         print("")
         print("∫ƒ(x)dx = " + intStr + " + c")
         
 def derivative(array, val="na"):
+	#initialize the string, derivative coefficient array and numerical derivative value
     dStr = ""
     deriv = []
     dx = 0
     rem = len(array)
+    #first order derivative string formulation logic with logic for avoiding unnecessary operators
     for typeProxy in range(rem):
         e = array[typeProxy]
         if typeProxy == (rem - 1):
@@ -245,10 +258,12 @@ def derivative(array, val="na"):
                     dStr += " + " + str(e*(rem-1-typeProxy)) + "x^" + str(rem - 2 - typeProxy)
                 elif e < 0:
                     dStr += " " + str(e*(rem-1-typeProxy)) + "x^" + str(rem - 2 - typeProxy)
+    #initialize second order derivative string, coefficient array and numerical value
     ddStr = ""
     derivTwo = []
     ddx = 0
     rem = len(deriv)
+    #second order derivative string formulation with logic for avoiding unnecessary operations
     for typeProxy in range(rem):
         e = deriv[typeProxy]
         if typeProxy == (rem - 1):
@@ -283,6 +298,7 @@ def derivative(array, val="na"):
                     ddStr += " + " + str(e*(rem-1-typeProxy)) + "x^" + str(rem - 2 - typeProxy)
                 elif e < 0:
                     ddStr += " " + str(e*(rem-1-typeProxy)) + "x^" + str(rem - 2 - typeProxy)
+    #if numerical derivative
     if val != "na":
         rem = len(deriv)
         torem = len(derivTwo)
@@ -304,10 +320,12 @@ def derivative(array, val="na"):
         print("ƒ'(x) = " + dStr + " | ƒ'(" + str(val) + ") = " + str(dx))
         print("")
         print("ƒ''(x) = " + ddStr + " | ƒ''(" + str(val) + ") = " + str(ddx))
+    #if variable derivative spit out strings without dx and ddx
     else:
         print("")
         print("ƒ'(x) = " + dStr)
         print("")
         print("ƒ''(x) = " + ddStr)
 
+#run the calculator at onset
 calcalc()
