@@ -20,3 +20,5 @@ For numerical integrals, enter a lower range and upper range for x. The answer i
 Variable integrals are reported as ∫ƒ(x) = ax^n + ... + bx^2 + mx + interceptProxy WHERE interceptProxy always equals 'c'.
 
 After the calculation is reported, if you would like to switch between derivative and integral enter `switch`; if you would like to reenter an equation from scratch enter `restart`.
+
+Thank you for using this application. Message me at christopherbiemer@gmail.com with any questions or recommendations for updates in functionality.
