@@ -1,7 +1,9 @@
 # derivativeIntegralCalculator
-Python, Single-Variable Calculus
+[Python, Single-Variable Calculus]
 
-Open the command-line terminal of your preference.
+This Python application relies on user-input to build a polynomial, determine the 1st- and 2nd-order derivatives of said polynomial (in absolute and variable terms) and calculate the integral of said polynomial (in absolute and variable terms)
+
+After downloading this repository, open the command-line terminal of your preference...
 
 While in the correct directory (derivativeIntegralCalculator), enter the command `python3 derivInteg.py` to start the calculator.
 
