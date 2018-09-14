@@ -3,9 +3,10 @@
 
 This Python application relies on user-input to build a polynomial, determine the 1st- and 2nd-order derivatives of said polynomial (in absolute and variable terms) and calculate the integral of said polynomial (in absolute and variable terms)
 
-After downloading this repository, open the command-line terminal of your preference...
+After downloading this repository to your directory of choice, open the command-line terminal of your preference...
+***Make sure that you have Python 3 installed (i.e. run the command `python --version` in your terminal)***
 
-While in the correct directory (derivativeIntegralCalculator), enter the command `python3 derivInteg.py` to start the calculator.
+While in the correct directory (derivativeIntegralCalculator), enter the command `python3 calcalc.py` to run the calculator.
 
 The system will begin by asking you for the exponent on the leading element of the equation. If you accidentally enter an exponent that is too large, the application is programmed to account for this error. Simply enter `0` when it asks for the coefficient on any element with an exponent larger than the leading element. However, this does NOT work the other way around. If the entry is too small, you will have to restart the program for user entry. The best way to get around this issue is to make sure every input is correct.
 
