@@ -1,13 +1,11 @@
+# -*- coding: utf-8 -*-
 #intro function for the application with latest functionality details
 def calcalc():
     #line spacing is repeated throughout the app to clarify the text display in the command line
     print("")
     print("CalCalc is a single-variable derivative and integral calculator that functions properly for most non-trig equations involving positive integer exponents. [Equations with π are currently not supported]")
     print("")
-    input("Press the ENTER key to begin constructing the equation you want to know the derivative or integral of...")
-    #funnel to the equation builder function
     values()
-
 #this equation guides users in building the single-variable 
 def values():
     print("")
@@ -87,7 +85,8 @@ def values():
         #ask the user if they want to repeat the application for another equation, switch between integration and derivation or exit the application
         def repeat():
             print("")
-            repeat = input("Enter `restart` to enter a new equation or `switch` to do something different with the current equation; any other input will exit the application --> ")
+            repeat = raw_input("Enter `restart` to enter a new equation or `switch` to do something different with the current equation; any other input will exit the application --> ")
+            repeat = repeat.lower()
             if repeat == "restart":
                 #start from the beginning to reset equation  
                 values()
@@ -97,13 +96,15 @@ def values():
             else:
                 #exit message and application close
                 print("Thank you for using CalCalc! Check back soon for updates in our functionality ...")
-                sprint("")
+                exit()
         print("")
-        step = input("Would you like to find the `integral` or the `derivative` of the equation? --> ")
+        step = raw_input("Would you like to find the `integral` or the `derivative` of the equation? --> ")
+        step = step.lower()
         if step == "integral":
             print("")
             #ask the user whether they want to integrate over a set of continuous values for x or in variable terms
-            solType = input("Type `num` if the integral solution you are looking for is numerical. Alternatively, press ENTER if the solution should be reported only in variable terms --> ")
+            solType = raw_input("Type `num` if the integral solution you are looking for is numerical. Alternatively, press ENTER if the solution should be calculated in variable terms only --> ")
+            solType = solType.lower()
             #numerical
             if solType == "num":
                 print("")
@@ -120,9 +121,11 @@ def values():
         elif step == "derivative":
             print("")
             #ask the user whether they are looking for a numerical derivative or a variable derivative
-            solType = input("Type `num` if the derivative solution you are looking for is numerical. Alternatively, press ENTER if the solution should be reported only in variable terms --> ")
+            solType = raw_input("Type `num` if the derivative solution you are looking for is numerical. Alternatively, press ENTER if the solution should be calculated in variable terms only--> ")
+            solType = solType.lower()
             #numerical
             if solType == "num":
+                print("")
                 #what is x equal to
                 varVal = int(input("Solve the derivative where x is equal to --> "))
                 #pass the x value into the derivative function arguments
@@ -135,11 +138,11 @@ def values():
                 repeat()
         #repeat if neither was entered
         else:
-            step = input("That is not a proper command. Would you like to find the `integral` or the `derivative` of the equation? --> ")
+            step = raw_input("That is not a proper command. Would you like to find the `integral` or the `derivative` of the equation? --> ")
+            return
     #call the switch function for the first time
     switch()
     print("")
-
 def integrate(array, lim1="na", lim2="na"):
 	#initialize integral coefficient list and variable integral string
     integral = []
@@ -215,8 +218,7 @@ def integrate(array, lim1="na", lim2="na"):
     #indefinite integral string presentation
     else:
         print("")
-        print("∫ƒ(x)dx = " + intStr + " + c")
-        
+        print("∫ƒ(x)dx = " + intStr + " + c")      
 def derivative(array, val="na"):
 	#initialize the string, derivative coefficient array and numerical derivative value
     dStr = ""
@@ -326,6 +328,5 @@ def derivative(array, val="na"):
         print("ƒ'(x) = " + dStr)
         print("")
         print("ƒ''(x) = " + ddStr)
-
 #run the calculator at onset
 calcalc()
